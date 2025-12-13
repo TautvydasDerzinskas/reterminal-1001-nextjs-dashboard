@@ -1,6 +1,9 @@
 import { DeviceData } from './types';
 import { fetchDeviceData } from './services';
-import { HiExclamationTriangle, HiBattery0, HiBattery50, HiBattery100, HiHomeModern, HiCloud, HiCog, HiClock } from 'react-icons/hi2';
+import { HiExclamationTriangle, HiBattery0, HiBattery50, HiBattery100 } from 'react-icons/hi2';
+import { FaDroplet } from "react-icons/fa6";
+import { FaTemperatureHigh, FaGitSquare } from "react-icons/fa";
+import { DeviceTime } from './DeviceTime';
 
 export default async function DeviceCard() {
     let device: DeviceData | null = null;
@@ -10,47 +13,44 @@ export default async function DeviceCard() {
     } catch {
         return (
             <>
-            <div className="card !rounded-md">
-                <p className="text-center">Error loading device data...</p>
+            <div className="card !rounded-md !bg-white !bg-black !text-white">
+                <p className="text-center font-semibold">Error loading device data...</p>
             </div>
-            <div className="card !rounded-md">
-                <p className="text-center">Error loading device sensors data...</p>
+            <div className="card !rounded-md !bg-black !text-white">
+                <p className="text-center font-semibold">Error loading device sensors data...</p>
             </div>
             </>
         );
     }
 
     return (
-        <>
-            <div className="card flex flex-wrap items-center justify-start gap-4 !rounded-md">
-                <span className="weather-details">
-                    {device.battery >= 80 ? <HiBattery100 className="inline mr-1" /> : device.battery >= 50 ? <HiBattery50 className="inline mr-1" /> : <HiBattery0 className="inline mr-1" />}
-                    {device.battery}%
-                </span>
-                <span className="weather-details">
-                    <HiClock className="inline mr-1" />
-                    {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/Warsaw' })}
-                </span>
-                <span className="weather-details">
-                    <HiCog className="inline mr-1" />
-                    {device.firmware_version}
-                </span>
-            </div>
-            <div className="card flex flex-wrap items-center justify-end gap-4 !rounded-md">
-                {device.isOutdated && (
-                    <span className="text-yellow-600 font-semibold">
-                        <HiExclamationTriangle className="inline mr-1" /> Outdated data
+            <div className="card !rounded-md !bg-black !text-white flex justify-between items-center">
+                <div className="flex flex-wrap items-center gap-4">
+                    <span className="card-cell font-semibold">
+                        {device.battery >= 80 ? <HiBattery100 size={16} className="inline mr-1" /> : device.battery >= 50 ? <HiBattery50 size={16} className="inline mr-1" /> : <HiBattery0 size={16} className="inline mr-1" />}
+                        {device.battery}%
                     </span>
-                )}
-                <span className="weather-details">
-                    <HiHomeModern className="inline mr-1" />
-                    {device.temperature}°C
-                </span>
-                <span className="weather-details">
-                    <HiCloud className="inline mr-1" />
-                    {device.humidity}%
-                </span>
+                    <DeviceTime />
+                    <span className="card-cell font-semibold">
+                        <FaGitSquare size={16} className="inline mr-1" />
+                        {device.firmware_version}
+                    </span>
+                </div>
+                <div className="flex flex-wrap items-center gap-4">
+                    {device.isOutdated && (
+                        <span className="card-cell font-semibold">
+                            <HiExclamationTriangle size={16} className="inline mr-1" /> Outdated data
+                        </span>
+                    )}
+                    <span className="card-cell font-semibold">
+                        <FaTemperatureHigh size={16} className="inline mr-1" />
+                        {device.temperature}°C
+                    </span>
+                    <span className="card-cell font-semibold">
+                        <FaDroplet size={16} className="inline mr-1" />
+                        {device.humidity}%
+                    </span>
+                </div>
             </div>
-        </>
     );
 }

@@ -69,19 +69,19 @@ main {
     border: 2px solid #000; /* Thicker border for eInk visibility */
     padding: 8px;
     border-radius: 0px; /* Sharp edges for eInk displays */
-    background-color: #ffffff;
+    background-color: var(--background);
+    color: var(--foreground);
 }
-.card:nth-child(1),
-.card:nth-child(2) {
-    grid-column: span 3; /* First row: 2 cards, each spanning 3 columns */
+.card:nth-child(1) {
+    grid-column: span 6; /* DeviceCard: full width */
 }
+.card:nth-child(2),
 .card:nth-child(3),
-.card:nth-child(4),
-.card:nth-child(5) {
-    grid-column: span 2; /* Second row: 3 cards, each spanning 2 columns */
+.card:nth-child(4) {
+    grid-column: span 2; /* Weather cards: each spans 2 columns */
 }
-.card:nth-child(6) {
-    grid-column: span 6; /* Third row: 1 card spanning all 6 columns */
+.card:nth-child(5) {
+    grid-column: span 6; /* Alerts: full width */
 }
 .card h2 {
     font-size: 20px;
@@ -99,9 +99,10 @@ main {
     margin: 5px 0;
 }
 
-.weather-details {
-    font-size: 14px;
-    margin: 3px 0;
+.card-cell {
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
 }
 
 

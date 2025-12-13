@@ -5,10 +5,16 @@ import { DeviceData, LoginResponse, DeviceListResponse, TokenCache, DeviceCache 
 const memoryCache: Record<string, any> = {};
 
 async function readCache(key: string): Promise<unknown | null> {
+    if (process.env.NODE_ENV !== 'development') {
+        return null;
+    }
     return memoryCache[key] || null;
 }
 
 async function writeCache(key: string, data: unknown): Promise<void> {
+    if (process.env.NODE_ENV !== 'development') {
+        return;
+    }
     memoryCache[key] = data;
 }
 
@@ -59,11 +65,18 @@ export async function fetchDeviceData(): Promise<DeviceData> {
                 'Authorization': token,
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             },
+            cache: 'no-store',
+            next: { revalidate: 0 },
         });
 
         if (!devicesRes.ok) {
             const responseText = await devicesRes.text();
-            console.error('Device list fetch failed:', devicesRes.status, devicesRes.statusText, responseText);
+            console.error(
+                'Device list fetch failed:',
+                devicesRes.status,
+                devicesRes.statusText,
+                responseText
+            );
             throw new Error(`Failed to fetch device list: ${devicesRes.status} ${devicesRes.statusText}`);
         }
 
