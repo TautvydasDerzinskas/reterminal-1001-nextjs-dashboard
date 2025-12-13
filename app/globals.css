@@ -1,26 +1,110 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #FFFFFF;
+    --foreground: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
+/* Reset and Base Styles */
+* {
+    /* margin: 0;
+    padding: 0; */
+    box-sizing: border-box;
+    /* Disable animations for eInk display */
+    animation: none !important;
+    transition: none !important;
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-roboto, sans-serif); /* Use Roboto from next/font */
+    font-size: 16px; /* Readable on 800x480 */
+    line-height: 1.6; /* Increased for eInk readability */
+    color: var(--foreground); /* Black text */
+    background-color: var(--background); /* White background */
+    max-width: 800px;
+    margin: 0 auto;
+    height: 480px; /* Fixed height to match eInk viewport */
+    overflow: hidden; /* Prevent scrollbars on eInk */
+    display: grid;
+    grid-template-rows: 1fr; /* Header, content, footer */
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
 }
+
+/* Header */
+header {
+    background-color: #ffffff; /* White background for eInk contrast */
+    padding: 10px;
+    border-bottom: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header h1 {
+    font-size: 20px;
+    font-weight: bold;
+}
+.status-indicator {
+    width: 20px;
+    height: 20px;
+    background-color: #00ff00; /* Green for "online" - grayscale: #808080 */
+    border-radius: 50%;
+    border: 2px solid #000;
+}
+
+/* Main Content - Grid for Cards */
+main {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 columns: 3 cards × 2 cols, or 2 cards × 3 cols */
+    gap: 10px;
+    overflow-y: auto; /* Rare scroll if content overflows height */
+    height: 100%; /* Fill available space */
+}
+.card {
+    border: 2px solid #000; /* Thicker border for eInk visibility */
+    padding: 8px;
+    border-radius: 0px; /* Sharp edges for eInk displays */
+    background-color: #ffffff;
+}
+.card:nth-child(1),
+.card:nth-child(2),
+.card:nth-child(3) {
+    grid-column: span 2; /* First row: 3 cards, each spanning 2 columns */
+}
+.card:nth-child(4),
+.card:nth-child(5) {
+    grid-column: span 3; /* Second row: 2 cards, each spanning 3 columns */
+}
+.card h2 {
+    font-size: 20px;
+    font-weight: 700; /* Use 700 weight for better clarity */
+    margin: 0 0 10px 0;
+}
+.card p {
+    font-size: 16px;
+    margin: 4px 0;
+}
+.metric {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0;
+}
+
+.weather-details {
+    font-size: 14px;
+    margin: 3px 0;
+}
+
+
+/* Monochrome Fallback - Already grayscale-optimized */
+@media (prefers-color-scheme: no-preference) {
+    body { background-color: var(--background); color: var(--foreground); }
+}
+
+@import "tailwindcss";
