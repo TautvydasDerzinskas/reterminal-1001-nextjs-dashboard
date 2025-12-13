@@ -14,10 +14,12 @@ export default async function DeviceCard() {
         return (
             <>
             <div className="card !rounded-md !bg-white !bg-black !text-white">
-                <p className="text-center font-semibold">Error loading device data...</p>
-            </div>
-            <div className="card !rounded-md !bg-black !text-white">
-                <p className="text-center font-semibold">Error loading device sensors data...</p>
+                <div className="flex flex-wrap items-center gap-4">
+                    <p className="text-center font-semibold">Error loading device data...</p>
+                </div>
+                <div className="flex flex-wrap items-center gap-4">
+                    <p className="text-center font-semibold">Error loading device sensors data...</p>
+                </div>
             </div>
             </>
         );
