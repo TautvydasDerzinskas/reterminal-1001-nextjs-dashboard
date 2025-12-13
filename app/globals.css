@@ -72,13 +72,16 @@ main {
     background-color: #ffffff;
 }
 .card:nth-child(1),
-.card:nth-child(2),
-.card:nth-child(3) {
-    grid-column: span 2; /* First row: 3 cards, each spanning 2 columns */
+.card:nth-child(2) {
+    grid-column: span 3; /* First row: 2 cards, each spanning 3 columns */
 }
+.card:nth-child(3),
 .card:nth-child(4),
 .card:nth-child(5) {
-    grid-column: span 3; /* Second row: 2 cards, each spanning 3 columns */
+    grid-column: span 2; /* Second row: 3 cards, each spanning 2 columns */
+}
+.card:nth-child(6) {
+    grid-column: span 6; /* Third row: 1 card spanning all 6 columns */
 }
 .card h2 {
     font-size: 20px;
