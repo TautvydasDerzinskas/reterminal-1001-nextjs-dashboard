@@ -7,13 +7,14 @@ export default async function DeviceCard() {
 
     try {
         device = await fetchDeviceData();
-    } catch {
+    } catch (err) {
+        console.error('Error fetching device data:', err);
         return (
             <>
-            <div className="card">
-                <p className="text-center">Error loading device data</p>
+            <div className="card !rounded-md">
+                <p className="text-center">Error loading device data: {err instanceof Error ? err.message : String(err)}</p>
             </div>
-            <div className="card">
+            <div className="card !rounded-md">
                 <p className="text-center">Error loading device sensors data</p>
             </div>
             </>

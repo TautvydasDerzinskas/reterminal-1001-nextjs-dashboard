@@ -75,7 +75,9 @@ export async function fetchDeviceData(): Promise<DeviceData> {
         });
 
         if (!devicesRes.ok) {
-            throw new Error('Failed to fetch device list');
+            const responseText = await devicesRes.text();
+            console.error('Device list fetch failed:', devicesRes.status, devicesRes.statusText, responseText);
+            throw new Error(`Failed to fetch device list: ${devicesRes.status} ${devicesRes.statusText}`);
         }
 
         const devicesResponse: DeviceListResponse = await devicesRes.json();
