@@ -1,13 +1,13 @@
 import { DeviceData } from './types';
 import { fetchDeviceData } from './services';
-import { HiExclamationTriangle, HiComputerDesktop, HiBattery0, HiBattery50, HiBattery100, HiHomeModern, HiCloud, HiCog, HiClock } from 'react-icons/hi2';
+import { HiExclamationTriangle, HiBattery0, HiBattery50, HiBattery100, HiHomeModern, HiCloud, HiCog, HiClock } from 'react-icons/hi2';
 
 export default async function DeviceCard() {
     let device: DeviceData | null = null;
 
     try {
         device = await fetchDeviceData();
-    } catch (error) {
+    } catch {
         return (
             <div className="card">
                 <p className="text-center">Error loading device data</p>

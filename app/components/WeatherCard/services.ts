@@ -1,5 +1,5 @@
 import locations from '@/data/locations.json';
-import { LocationData, WeatherData } from './types';
+import { LocationData, WeatherData, OpenMeteoResponse } from './types';
 import { getWeatherDescription } from './utils';
 
 // Fetch weather data server-side
@@ -21,7 +21,7 @@ export async function fetchWeatherData(location: string): Promise<WeatherData> {
         throw new Error('Failed to fetch weather data');
     }
 
-    const weatherData = await weatherRes.json();
+    const weatherData: OpenMeteoResponse = await weatherRes.json();
     const current = weatherData.current;
     const daily = weatherData.daily;
 

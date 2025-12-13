@@ -1,5 +1,4 @@
 import WeatherCard from "./components/WeatherCard";
-import CalendarCard from "./components/CalendarCard";
 import DeviceCard from "./components/DeviceCard";
 
 export default function Home() {

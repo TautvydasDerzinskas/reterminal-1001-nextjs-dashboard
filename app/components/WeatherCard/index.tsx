@@ -7,7 +7,7 @@ export default async function WeatherCard({ location }: WeatherCardProps) {
 
     try {
         weather = await fetchWeatherData(location);
-    } catch (error) {
+    } catch {
         return (
             <div className="card">
                 <p className="text-center">Error loading weather for {location}</p>

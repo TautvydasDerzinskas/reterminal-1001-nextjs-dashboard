@@ -1,12 +1,13 @@
 // Fetch device data server-side
 import fs from 'fs/promises';
 import path from 'path';
+import { DeviceData, LoginResponse, DeviceListResponse, TokenCache, DeviceCache } from './types';
 
 const CACHE_DIR = path.join(process.cwd(), 'data');
 const TOKEN_CACHE_PATH = path.join(CACHE_DIR, 'token_cache.json');
 const DEVICE_CACHE_PATH = path.join(CACHE_DIR, 'device_cache.json');
 
-async function readCache(filePath: string): Promise<any> {
+async function readCache(filePath: string): Promise<unknown | null> {
     try {
         const data = await fs.readFile(filePath, 'utf-8');
         return JSON.parse(data);
@@ -15,11 +16,11 @@ async function readCache(filePath: string): Promise<any> {
     }
 }
 
-async function writeCache(filePath: string, data: any): Promise<void> {
+async function writeCache(filePath: string, data: unknown): Promise<void> {
     await fs.writeFile(filePath, JSON.stringify(data, null, 2));
 }
 
-export async function fetchDeviceData(): Promise<import('./types').DeviceData> {
+export async function fetchDeviceData(): Promise<DeviceData> {
     const username = process.env.SENSECRAFT_LOGIN_USERNAME;
     const passwordEncoded = process.env.SENSECRAFT_LOGIN_PASSOWRD_ENCODED;
 
@@ -33,7 +34,7 @@ export async function fetchDeviceData(): Promise<import('./types').DeviceData> {
     const threeHours = 3 * 60 * 60 * 1000;
 
     let token: string;
-    const tokenCache = await readCache(TOKEN_CACHE_PATH);
+    const tokenCache = await readCache(TOKEN_CACHE_PATH) as TokenCache | null;
     if (tokenCache && (now - tokenCache.timestamp) < threeHours) {
         token = tokenCache.token;
     } else {
@@ -49,7 +50,7 @@ export async function fetchDeviceData(): Promise<import('./types').DeviceData> {
             throw new Error('Failed to authenticate');
         }
 
-        const loginResponse = await loginRes.json();
+        const loginResponse: LoginResponse = await loginRes.json();
         console.log('Login Response:', loginResponse);
         if (loginResponse.code !== 0) {
             throw new Error(loginResponse.msg || 'Login failed');
@@ -73,7 +74,7 @@ export async function fetchDeviceData(): Promise<import('./types').DeviceData> {
             throw new Error('Failed to fetch device list');
         }
 
-        const devicesResponse = await devicesRes.json();
+        const devicesResponse: DeviceListResponse = await devicesRes.json();
         console.log('Devices Response:', devicesResponse);
         if (devicesResponse.code !== 200) {
             throw new Error(devicesResponse.message || 'API error');
@@ -98,7 +99,7 @@ export async function fetchDeviceData(): Promise<import('./types').DeviceData> {
         await writeCache(DEVICE_CACHE_PATH, { data: deviceData, timestamp: now });
         return deviceData;
     } catch (error) {
-        const deviceCache = await readCache(DEVICE_CACHE_PATH);
+        const deviceCache = await readCache(DEVICE_CACHE_PATH) as DeviceCache | null;
         if (deviceCache) {
             return { ...deviceCache.data, isOutdated: true };
         } else {
