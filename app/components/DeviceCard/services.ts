@@ -1,23 +1,15 @@
-// Fetch device data server-side
-import fs from 'fs/promises';
-import path from 'path';
 import { DeviceData, LoginResponse, DeviceListResponse, TokenCache, DeviceCache } from './types';
 
-const CACHE_DIR = path.join(process.cwd(), 'data');
-const TOKEN_CACHE_PATH = path.join(CACHE_DIR, 'token_cache.json');
-const DEVICE_CACHE_PATH = path.join(CACHE_DIR, 'device_cache.json');
+// In-memory cache
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const memoryCache: Record<string, any> = {};
 
-async function readCache(filePath: string): Promise<unknown | null> {
-    try {
-        const data = await fs.readFile(filePath, 'utf-8');
-        return JSON.parse(data);
-    } catch {
-        return null;
-    }
+async function readCache(key: string): Promise<unknown | null> {
+    return memoryCache[key] || null;
 }
 
-async function writeCache(filePath: string, data: unknown): Promise<void> {
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+async function writeCache(key: string, data: unknown): Promise<void> {
+    memoryCache[key] = data;
 }
 
 export async function fetchDeviceData(): Promise<DeviceData> {
@@ -34,7 +26,7 @@ export async function fetchDeviceData(): Promise<DeviceData> {
     const threeHours = 3 * 60 * 60 * 1000;
 
     let token: string;
-    const tokenCache = await readCache(TOKEN_CACHE_PATH) as TokenCache | null;
+    const tokenCache = await readCache('token_cache') as TokenCache | null;
     if (tokenCache && (now - tokenCache.timestamp) < threeHours) {
         token = tokenCache.token;
     } else {
@@ -51,20 +43,14 @@ export async function fetchDeviceData(): Promise<DeviceData> {
         }
 
         const loginResponse: LoginResponse = await loginRes.json();
-        console.log('Login Response:', loginResponse);
         if (loginResponse.code !== 0) {
             throw new Error(loginResponse.msg || 'Login failed');
         }
 
         token = loginResponse.data.token;
-        try {
-            await writeCache(TOKEN_CACHE_PATH, { token, timestamp: now });
-        } catch {
-            // Ignore cache write failures (e.g., on read-only file systems like Vercel)
-        }
+        await writeCache('token_cache', { token, timestamp: now });
     }
 
-    // Now, fetch device list
     const DEVICE_LIST_URL = "https://sensecraft-hmi-api.seeed.cc/api/v2/user/device/list";
     try {
         const devicesRes = await fetch(DEVICE_LIST_URL, {
@@ -81,7 +67,6 @@ export async function fetchDeviceData(): Promise<DeviceData> {
         }
 
         const devicesResponse: DeviceListResponse = await devicesRes.json();
-        console.log('Devices Response:', devicesResponse);
         if (devicesResponse.code !== 200) {
             throw new Error(devicesResponse.message || 'API error');
         }
@@ -102,14 +87,10 @@ export async function fetchDeviceData(): Promise<DeviceData> {
         const device_name = device.device_name || 'Unknown';
 
         const deviceData = { battery, temperature, humidity, firmware_version, device_name, isOutdated: false };
-        try {
-            await writeCache(DEVICE_CACHE_PATH, { data: deviceData, timestamp: now });
-        } catch {
-            // Ignore cache write failures (e.g., on read-only file systems like Vercel)
-        }
+        await writeCache('device_cache', { data: deviceData, timestamp: now });
         return deviceData;
     } catch (error) {
-        const deviceCache = await readCache(DEVICE_CACHE_PATH) as DeviceCache | null;
+        const deviceCache = await readCache('device_cache') as DeviceCache | null;
         if (deviceCache) {
             return { ...deviceCache.data, isOutdated: true };
         } else {
