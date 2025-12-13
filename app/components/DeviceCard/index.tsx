@@ -10,18 +10,11 @@ export default async function DeviceCard() {
 
     try {
         device = await fetchDeviceData();
-    } catch {
+    } catch (error) {
         return (
-            <>
-            <div className="card !rounded-md !bg-white !bg-black !text-white">
-                <div className="flex flex-wrap items-center gap-4">
-                    <p className="text-center font-semibold">Error loading device data...</p>
-                </div>
-                <div className="flex flex-wrap items-center gap-4">
-                    <p className="text-center font-semibold">Error loading device sensors data...</p>
-                </div>
+            <div className="card !rounded-md !bg-black !text-white">
+                <p className="text-center font-semibold">{error instanceof Error ? error.message : 'Error loading data...'}</p>
             </div>
-            </>
         );
     }
 
@@ -29,27 +22,27 @@ export default async function DeviceCard() {
             <div className="card !rounded-md !bg-black !text-white flex justify-between items-center">
                 <div className="flex flex-wrap items-center gap-4">
                     <span className="card-cell font-semibold">
-                        {device.battery >= 80 ? <HiBattery100 size={16} className="inline mr-1" /> : device.battery >= 50 ? <HiBattery50 size={16} className="inline mr-1" /> : <HiBattery0 size={16} className="inline mr-1" />}
+                        {device.battery >= 80 ? <HiBattery100 size={22} className="inline mr-1" /> : device.battery >= 50 ? <HiBattery50 size={22} className="inline mr-1" /> : <HiBattery0 size={22} className="inline mr-1" />}
                         {device.battery}%
                     </span>
                     <DeviceTime />
                     <span className="card-cell font-semibold">
-                        <FaGitSquare size={16} className="inline mr-1" />
+                        <FaGitSquare size={22} className="inline mr-1" />
                         {device.firmware_version}
                     </span>
                 </div>
                 <div className="flex flex-wrap items-center gap-4">
                     {device.isOutdated && (
                         <span className="card-cell font-semibold">
-                            <HiExclamationTriangle size={16} className="inline mr-1" /> Outdated data
+                            <HiExclamationTriangle size={22} className="inline mr-1" /> Outdated data
                         </span>
                     )}
                     <span className="card-cell font-semibold">
-                        <FaTemperatureHigh size={16} className="inline mr-1" />
+                        <FaTemperatureHigh size={22} className="inline mr-1" />
                         {device.temperature}°C
                     </span>
                     <span className="card-cell font-semibold">
-                        <FaDroplet size={16} className="inline mr-1" />
+                        <FaDroplet size={22} className="inline mr-1" />
                         {device.humidity}%
                     </span>
                 </div>

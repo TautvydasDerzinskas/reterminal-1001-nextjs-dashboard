@@ -81,13 +81,3 @@ export interface DeviceListResponse {
     result: Device[];
     message: string;
 }
-
-export interface TokenCache {
-    token: string;
-    timestamp: number;
-}
-
-export interface DeviceCache {
-    data: DeviceData;
-    timestamp: number;
-}
