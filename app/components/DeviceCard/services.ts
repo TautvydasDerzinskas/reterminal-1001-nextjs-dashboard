@@ -22,10 +22,10 @@ async function writeCache(filePath: string, data: unknown): Promise<void> {
 
 export async function fetchDeviceData(): Promise<DeviceData> {
     const username = process.env.SENSECRAFT_LOGIN_USERNAME;
-    const passwordEncoded = process.env.SENSECRAFT_LOGIN_PASSOWRD_ENCODED;
+    const passwordEncoded = process.env.SENSECRAFT_LOGIN_PASSWORD_ENCODED;
 
     if (!username || !passwordEncoded) {
-        throw new Error('SenseCraft login credentials not configured');
+        throw new Error('SenseCAP login credentials not configured');
     }
 
     const LOGIN_URL = `https://sensecap.seeed.cc/portalapi/user/login?account=${username}&password=${passwordEncoded}&origin=1`;
@@ -57,7 +57,11 @@ export async function fetchDeviceData(): Promise<DeviceData> {
         }
 
         token = loginResponse.data.token;
-        await writeCache(TOKEN_CACHE_PATH, { token, timestamp: now });
+        try {
+            await writeCache(TOKEN_CACHE_PATH, { token, timestamp: now });
+        } catch {
+            // Ignore cache write failures (e.g., on read-only file systems like Vercel)
+        }
     }
 
     // Now, fetch device list
@@ -96,7 +100,11 @@ export async function fetchDeviceData(): Promise<DeviceData> {
         const device_name = device.device_name || 'Unknown';
 
         const deviceData = { battery, temperature, humidity, firmware_version, device_name, isOutdated: false };
-        await writeCache(DEVICE_CACHE_PATH, { data: deviceData, timestamp: now });
+        try {
+            await writeCache(DEVICE_CACHE_PATH, { data: deviceData, timestamp: now });
+        } catch {
+            // Ignore cache write failures (e.g., on read-only file systems like Vercel)
+        }
         return deviceData;
     } catch (error) {
         const deviceCache = await readCache(DEVICE_CACHE_PATH) as DeviceCache | null;

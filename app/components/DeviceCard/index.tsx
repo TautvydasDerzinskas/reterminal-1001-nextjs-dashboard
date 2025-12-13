@@ -9,9 +9,14 @@ export default async function DeviceCard() {
         device = await fetchDeviceData();
     } catch {
         return (
+            <>
             <div className="card">
                 <p className="text-center">Error loading device data</p>
             </div>
+            <div className="card">
+                <p className="text-center">Error loading device sensors data</p>
+            </div>
+            </>
         );
     }
 

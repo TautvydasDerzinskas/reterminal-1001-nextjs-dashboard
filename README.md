@@ -20,7 +20,7 @@ A dashboard application for displaying weather data and device information. Opti
 3. Create a `.env.local` file in the project root and add your credentials:
    ``
    SENSECRAFT_LOGIN_USERNAME=your_username_here
-   SENSECRAFT_LOGIN_PASSOWRD_ENCODED=your_password_here
+   SENSECRAFT_LOGIN_PASSWORD_ENCODED=your_password_here
    ```
 
 4. Run the development server:
