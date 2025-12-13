@@ -5,17 +5,17 @@ import { PullRequest } from './types';
 export default async function PullRequestsCard() {
   const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
   const username = process.env.NEXT_PUBLIC_GITHUB_USERNAME;
-  const owner = 'openx';
-  const repo = 'ui-unity';
+  const owner = process.env.NEXT_PUBLIC_GITHUB_OWNER;
+  const repo = process.env.NEXT_PUBLIC_GITHUB_REPO;
 
   let prs: PullRequest[] = [];
   let error: string | null = null;
 
-  if (!token) {
-    error = 'GitHub token not provided. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.';
+  if (!token || !username || !owner || !repo) {
+    error = 'GitHub env variables not provided. Please set NEXT_PUBLIC_GITHUB_TOKEN, NEXT_PUBLIC_GITHUB_USERNAME, NEXT_PUBLIC_GITHUB_OWNER, and NEXT_PUBLIC_GITHUB_REPO in your environment variables.';
   } else {
     try {
-      prs = await fetchPendingReviewPRs(token, username as string, owner, repo);
+      prs = await fetchPendingReviewPRs(token, username, owner, repo);
     } catch (err) {
       error = (err as Error).message;
     }
