@@ -2,23 +2,20 @@
 
 import { HiClock } from 'react-icons/hi2';
 import { useEffect, useState } from 'react';
+const getTime = () =>
+  new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Europe/Warsaw',
+  });
+
 
 export function DeviceTime() {
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState(getTime());
 
   useEffect(() => {
-    const update = () => {
-      setTime(
-        new Date().toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-          timeZone: 'Europe/Warsaw',
-        })
-      );
-    };
-    update();
-    const id = setInterval(update, 60_000);
+    const id = setInterval(() => setTime(getTime()), 60_000);
     return () => clearInterval(id);
   }, []);
 

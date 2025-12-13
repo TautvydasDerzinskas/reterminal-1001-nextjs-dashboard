@@ -1,4 +1,4 @@
-import { ImageResponse } from '@vercel/og';
+import { ImageResponse } from 'next/og';
 import { fetchDashboardData, generateDashboardJSX, generateErrorJSX } from '../../../lib/dashboard';
 
 export const runtime = 'edge';

@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "app/api/dashboard-image-raw/route.tsx": {
+      "maxDuration": 30,
+      "memory": 2048
+    }
+  }
+}
