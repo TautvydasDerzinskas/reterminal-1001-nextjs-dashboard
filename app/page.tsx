@@ -1,5 +1,6 @@
 import WeatherCard from "./components/WeatherCard";
 import DeviceCard from "./components/DeviceCard";
+import PullRequestsCard from "./components/PullRequestsCard";
 
 export default function Home() {
   return (
@@ -9,11 +10,7 @@ export default function Home() {
       <WeatherCard location="Zendek" />
       <WeatherCard location="Šiauliai" />
       <WeatherCard location="Dukla" />
-      <div className="card">
-        <h2>Alerts</h2>
-        <div className="metric">0</div>
-        <p>No issues detected</p>
-      </div>
+      <PullRequestsCard />
     </main>
     </>
   );

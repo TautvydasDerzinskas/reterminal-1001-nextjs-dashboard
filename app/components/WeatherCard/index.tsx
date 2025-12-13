@@ -24,15 +24,15 @@ export default async function WeatherCard({ location }: WeatherCardProps) {
                 {getWeatherIcon(weather.description)}
             </div>
             <p className="card-cell text-center !text-xl !mb-4 !mt-0">
-                {weather.description} <span className="font-bold">{weather.currentTemp}°C / {weather.humidity}%</span>
+                {weather.description} <span className="font-bold ml-2">{weather.currentTemp}°C / {weather.humidity}%</span>
             </p>
             <p className="card-cell text-center">
-                <strong>Today: </strong>
-                {weather.highTemp}°C / {weather.lowTemp}°C
+                <span>Today: </span>
+                <span className="font-bold ml-2">{weather.highTemp}°C / {weather.lowTemp}°C</span>
             </p>
             <p className="card-cell text-center">
-                <strong>Tomorrow: </strong>
-                {weather.tomorrowTempHigh}°C / {weather.tomorrowTempLow}°C
+                <span>Tomorrow: </span>
+                <span className="font-bold ml-2">{weather.tomorrowTempHigh}°C / {weather.tomorrowTempLow}°C</span>
             </p>
         </div>
     );
