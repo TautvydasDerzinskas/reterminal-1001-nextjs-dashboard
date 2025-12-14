@@ -39,10 +39,10 @@ async function generatePackedBuffer(pngBuffer: ArrayBuffer): Promise<Buffer> {
   return packed;
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const data = await fetchDashboardData();
-    const jsx = generateDashboardJSX(data);
+    const jsx = generateDashboardJSX(data, request);
 
     const imageResponse = new ImageResponse(jsx, {
       width: 800,

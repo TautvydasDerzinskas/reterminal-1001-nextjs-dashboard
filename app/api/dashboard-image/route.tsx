@@ -3,10 +3,10 @@ import { fetchDashboardData, generateDashboardJSX, generateErrorJSX } from '../.
 
 export const runtime = 'edge';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const data = await fetchDashboardData();
-    const jsx = generateDashboardJSX(data);
+    const jsx = generateDashboardJSX(data, request);
 
     return new ImageResponse(jsx, {
       width: 800,
