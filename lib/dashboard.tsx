@@ -9,9 +9,8 @@ import { FaUser } from 'react-icons/fa6';
 
 export interface DashboardData {
   deviceData: DeviceData | null;
-  weatherZendek: WeatherData | null;
-  weatherSiauliai: WeatherData | null;
-  weatherDukla: WeatherData | null;
+  weatherData: WeatherData[];
+  cities: string[];
   prs: PullRequest[];
 }
 
@@ -42,11 +41,11 @@ function getOverridesFromRequest(request?: Request): DashboardOverrides {
 }
 
 export async function fetchDashboardData(): Promise<DashboardData> {
-  const [deviceData, weatherZendek, weatherSiauliai, weatherDukla, prs] = await Promise.all([
+  const cities = process.env.NEXT_PUBLIC_WEATHER_CITIES?.split(',') || ['Zendek', 'Šiauliai', 'Dukla'];
+  const weatherPromises = cities.map(city => fetchWeatherData(city.trim()).catch(() => null));
+  const [deviceData, ...weatherDataAndPrs] = await Promise.all([
     fetchDeviceData().catch(() => null),
-    fetchWeatherData('Zendek').catch(() => null),
-    fetchWeatherData('Šiauliai').catch(() => null),
-    fetchWeatherData('Dukla').catch(() => null),
+    ...weatherPromises,
     fetchPendingReviewPRs(
       process.env.NEXT_PUBLIC_GITHUB_TOKEN!,
       process.env.NEXT_PUBLIC_GITHUB_USERNAME!,
@@ -55,11 +54,13 @@ export async function fetchDashboardData(): Promise<DashboardData> {
     ).catch(() => []),
   ]);
 
+  const prs = weatherDataAndPrs.pop() as PullRequest[];
+  const weatherData = weatherDataAndPrs as WeatherData[];
+
   return {
     deviceData,
-    weatherZendek,
-    weatherSiauliai,
-    weatherDukla,
+    weatherData,
+    cities,
     prs,
   };
 }
@@ -69,7 +70,7 @@ const batteryIcon50 = (<svg stroke="currentColor" fill="currentColor" stroke-wid
 const batteryIcon0 = (<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" height="22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M.75 9.75a3 3 0 0 1 3-3h15a3 3 0 0 1 3 3v.038c.856.173 1.5.93 1.5 1.837v2.25c0 .907-.644 1.664-1.5 1.838v.037a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3v-6Zm19.5 0a1.5 1.5 0 0 0-1.5-1.5h-15a1.5 1.5 0 0 0-1.5 1.5v6a1.5 1.5 0 0 0 1.5 1.5h15a1.5 1.5 0 0 0 1.5-1.5v-6Z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>);
 
 export function generateDashboardJSX(data: DashboardData, request?: Request) {
-  const { deviceData, weatherZendek, weatherSiauliai, weatherDukla, prs } = data;
+  const { deviceData, weatherData, cities, prs } = data;
   const overrides = getOverridesFromRequest(request);
   const batteryDisplay = overrides?.battery ?? `${deviceData?.battery}`;
   const firmwareDisplay = overrides?.firmware ?? deviceData?.firmware_version;
@@ -134,8 +135,8 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
 
       {/* Weather Cards */}
       <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
-        {[weatherZendek, weatherSiauliai, weatherDukla].map((weather, index) => {
-          const locations = ['Zendek', 'Šiauliai', 'Dukla'];
+        {weatherData.map((weather, index) => {
+          const location = cities[index];
           return (
             <div
               key={index}
@@ -159,7 +160,7 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
                   borderRadius: '8px',
                   fontSize: '20px',
                   fontWeight: 'normal',
-                }}>{locations[index]}</span>
+                }}>{location}</span>
               </h4>
               {weather ? (
                 <div style={{ fontSize: '14px', display: 'flex', flexDirection: 'column' }}>

@@ -2,6 +2,8 @@
 
 A dashboard application for displaying weather data and device information. Optimized for eInk screen.
 
+![Dashboard Preview](.github/assets/preview.jpeg)
+
 ## Setup
 
 1. Clone the repository and install dependencies:
@@ -18,9 +20,15 @@ A dashboard application for displaying weather data and device information. Opti
    - Inspect the request payload to extract your username and password
 
 3. Create a `.env.local` file in the project root and add your credentials:
-   ``
+   ```
    SENSECRAFT_LOGIN_USERNAME=your_username_here
    SENSECRAFT_LOGIN_PASSWORD_ENCODED=your_password_here
+   NEXT_PUBLIC_GITHUB_TOKEN=your_github_token_here
+   NEXT_PUBLIC_GITHUB_USERNAME=your_github_username_here
+   NEXT_PUBLIC_GITHUB_OWNER=your_github_repo_owner_here
+   NEXT_PUBLIC_GITHUB_REPO=your_github_repo_name_here
+   SENSECRAFT_DEVICE_ID=your_device_id_here
+   NEXT_PUBLIC_WEATHER_CITIES=city_name_one,city_name_two,city_name_three
    ```
 
 4. Run the development server:
