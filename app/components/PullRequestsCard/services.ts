@@ -101,3 +101,17 @@ export async function fetchPendingReviewPRs(token: string, username: string, own
 
   return prs;
 }
+
+export const getTimeAgo = (createdAt: string) => {
+  const now = new Date();
+  const created = new Date(createdAt);
+  if (isNaN(created.getTime())) return '';
+  const diffMs = now.getTime() - created.getTime();
+  const diffHours = diffMs / (1000 * 60 * 60);
+  if (diffHours < 24) {
+    return `(${Math.floor(diffHours)} hours ago)`;
+  } else {
+    const diffDays = diffHours / 24;
+    return `(${Math.floor(diffDays)} days ago)`;
+  }
+};

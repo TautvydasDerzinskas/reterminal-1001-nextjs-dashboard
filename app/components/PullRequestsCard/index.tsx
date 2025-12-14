@@ -1,5 +1,5 @@
 import { FaUser } from 'react-icons/fa';
-import { fetchPendingReviewPRs } from './services';
+import { fetchPendingReviewPRs, getTimeAgo } from './services';
 import { PullRequest } from './types';
 
 export default async function PullRequestsCard() {
@@ -20,20 +20,6 @@ export default async function PullRequestsCard() {
       error = (err as Error).message;
     }
   }
-
-  const getTimeAgo = (createdAt: string) => {
-    const now = new Date();
-    const created = new Date(createdAt);
-    if (isNaN(created.getTime())) return '';
-    const diffMs = now.getTime() - created.getTime();
-    const diffHours = diffMs / (1000 * 60 * 60);
-    if (diffHours < 24) {
-      return `(${Math.floor(diffHours)} hours ago)`;
-    } else {
-      const diffDays = diffHours / 24;
-      return `(${Math.floor(diffDays)} days ago)`;
-    }
-  };
 
   if (error) return <div className="card"><h2>Pending Reviews</h2><p>Error: {error}</p></div>;
 
