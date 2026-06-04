@@ -5,7 +5,7 @@ export interface LocationData {
 }
 
 export interface WeatherCardProps {
-    location: string; // City name
+    location: string;
 }
 
 export interface WeatherData {

@@ -2,7 +2,6 @@ import locations from '@/data/locations.json';
 import { LocationData, WeatherData, OpenMeteoResponse } from './types';
 import { getWeatherDescription } from './utils';
 
-// Fetch weather data server-side
 export async function fetchWeatherData(location: string): Promise<WeatherData> {
     const locationData = (locations as Record<string, LocationData>)[location];
 
@@ -14,7 +13,7 @@ export async function fetchWeatherData(location: string): Promise<WeatherData> {
 
     const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto`,
-        { next: { revalidate: 3600 } } // Revalidate every hour
+        { next: { revalidate: 3600 } }
     );
 
     if (!weatherRes.ok) {

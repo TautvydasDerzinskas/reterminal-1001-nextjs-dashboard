@@ -11,7 +11,6 @@ async function getAuthToken(): Promise<string> {
 
     const LOGIN_URL = `https://sensecap.seeed.cc/portalapi/user/login?account=${username}&password=${passwordEncoded}&origin=1`;
 
-    // Authenticate and get token
     let loginRes: Response;
     try {
         loginRes = await fetch(LOGIN_URL, {
@@ -44,12 +43,12 @@ async function fetchDeviceDetail(token: string): Promise<Device> {
 
     let devicesRes: Response;
     let attempts = 0;
-    const maxAttempts = 3; // Increased from 2 to 3
+    const maxAttempts = 3;
 
     while (attempts < maxAttempts) {
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+            const timeoutId = setTimeout(() => controller.abort(), 15000);
             devicesRes = await fetch(DEVICE_DETAIL_URL, {
                 headers: {
                     'Authorization': token,
@@ -79,8 +78,7 @@ async function fetchDeviceDetail(token: string): Promise<Device> {
                 }
                 throw new Error('0 Error loading device sensors data... Network error after retries');
             }
-            // Add delay before retry
-            await new Promise(resolve => setTimeout(resolve, 1000 * attempts)); // 1s, 2s delay
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempts));
             continue;
         }
 
@@ -110,7 +108,6 @@ async function fetchDeviceDetail(token: string): Promise<Device> {
             );
             throw new Error(`Error loading device sensors data... ${errorDetails} ${attempts}`);
         }
-        // Add delay before retry on error status
         await new Promise(resolve => setTimeout(resolve, 1000 * attempts));
     }
 
@@ -125,7 +122,6 @@ async function fetchDeviceDetail(token: string): Promise<Device> {
 export async function fetchDeviceData(): Promise<DeviceData> {
     try {
         const token = await getAuthToken();
-        // Small delay after token fetch
         await new Promise(resolve => setTimeout(resolve, 500));
         const device = await fetchDeviceDetail(token);
         const sensorData = device.sensor_data;
@@ -136,8 +132,7 @@ export async function fetchDeviceData(): Promise<DeviceData> {
         const firmware_version = device.version || 'Unknown';
         const device_name = device.device_name || 'Unknown';
 
-        const deviceData = { battery, temperature, humidity, firmware_version, device_name, isOutdated: false };
-        return deviceData;
+        return { battery, temperature, humidity, firmware_version, device_name, isOutdated: false };
     } catch (error) {
         throw error;
     }

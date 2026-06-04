@@ -6,6 +6,20 @@ A dashboard application for displaying weather data and device information. Opti
 
 ## Setup
 
+### Prerequisites
+
+- Node.js `20.19.0` or newer
+- npm `10` or newer
+
+Recommended: Node.js `20.19.0+`.
+Required minimum: Node.js `20.9.0+`.
+
+If you use `nvm`:
+
+```bash
+nvm use
+```
+
 1. Clone the repository and install dependencies:
    ```bash
    npm install
