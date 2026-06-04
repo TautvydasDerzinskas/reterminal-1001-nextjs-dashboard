@@ -1,16 +1,16 @@
-import { fetchDeviceData } from './device/services';
-import { fetchWeatherData } from './weather/services';
-import { fetchPendingReviewPRs } from './pullRequests/services';
-import { DeviceData } from './device/types';
-import { WeatherData } from './weather/types';
-import { PullRequest } from './pullRequests/types';
-import { theme } from './theme';
-import { labels } from './labels';
-import { DeviceSection } from './components/DeviceSection/index';
-import { WeatherCard } from './components/WeatherSection/WeatherCard';
-import { PullRequestsSection } from './components/PullRequestsSection/index';
-import { TrashPickupSection } from './components/TrashPickupSection/index';
-import { getNextTrashPickup } from './trashPickup/utils';
+import { fetchDeviceData } from './DeviceSection/services';
+import { fetchWeatherData } from './WeatherSection/services';
+import { fetchPendingReviewPRs } from './PullRequestsSection/services';
+import { DeviceData } from './DeviceSection/types';
+import { WeatherData } from './WeatherSection/types';
+import { PullRequest } from './PullRequestsSection/types';
+import { theme } from './shared/theme';
+import { labels } from './shared/labels';
+import { DeviceSection } from './DeviceSection/index';
+import { WeatherSectionWeatherCard } from './WeatherSection/WeatherSectionWeatherCard';
+import { PullRequestsSection } from './PullRequestsSection/index';
+import { TrashPickupSection } from './TrashPickupSection/index';
+import { getNextTrashPickup } from './TrashPickupSection/utils';
 import trashPickupDates from '../data/trash-pickup-dates.json';
 
 export interface DashboardData {
@@ -108,8 +108,8 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
         {/* Left 2/3 column: first 2 weather cards + PR section */}
         <div style={{ display: 'flex', flexDirection: 'column', flex: 2, gap: theme.gap.cards }}>
           <div style={{ display: 'flex', gap: theme.gap.cards }}>
-            <WeatherCard weather={weatherData[0]} location={cities[0]} />
-            <WeatherCard weather={weatherData[1]} location={cities[1]} />
+            <WeatherSectionWeatherCard weather={weatherData[0]} location={cities[0]} />
+            <WeatherSectionWeatherCard weather={weatherData[1]} location={cities[1]} />
           </div>
           <PullRequestsSection prs={prs} />
         </div>
@@ -118,7 +118,7 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: theme.gap.cards }}>
           {/* Row wrapper keeps WeatherCard's flex:1 acting on width, not height */}
           <div style={{ display: 'flex' }}>
-            <WeatherCard weather={weatherData[2]} location={cities[2]} />
+            <WeatherSectionWeatherCard weather={weatherData[2]} location={cities[2]} />
           </div>
           <TrashPickupSection nextPickup={nextPickup} />
         </div>

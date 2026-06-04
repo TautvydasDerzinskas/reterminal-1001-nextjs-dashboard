@@ -1,4 +1,4 @@
-import { getTimeAgo } from '../../../lib/pullRequests/services';
+import { getTimeAgo } from './services';
 
 describe('getTimeAgo', () => {
   beforeEach(() => {

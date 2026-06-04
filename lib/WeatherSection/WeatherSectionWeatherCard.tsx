@@ -1,15 +1,15 @@
-import { WeatherData } from '../../weather/types';
-import { getWeatherIcon } from '../../weather/utils';
-import { theme } from '../../theme';
-import { labels } from '../../labels';
-import { CityBadge } from './CityBadge';
+import { WeatherData } from './types';
+import { getWeatherIcon } from './utils';
+import { theme } from '../shared/theme';
+import { labels } from '../shared/labels';
+import { CityBadge } from './WeatherSectionCityBadge';
 
 interface Props {
   weather: WeatherData | null;
   location: string;
 }
 
-export const WeatherCard = ({ weather, location }: Props) => (
+export const WeatherSectionWeatherCard = ({ weather, location }: Props) => (
   <div
     style={{
       flex: 1,

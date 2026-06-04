@@ -1,6 +1,6 @@
-import { getNextTrashPickup } from '../../../lib/trashPickup/utils';
-import trashPickupDates from '../../../data/trash-pickup-dates.json';
-import { TrashPickupEntry } from '../../../lib/trashPickup/types';
+import { getNextTrashPickup } from './utils';
+import trashPickupDates from '../../data/trash-pickup-dates.json';
+import { TrashPickupEntry } from './types';
 
 const entries = trashPickupDates as TrashPickupEntry[];
 

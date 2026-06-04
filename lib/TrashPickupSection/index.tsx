@@ -1,7 +1,7 @@
-import { theme } from '../../theme';
-import { labels } from '../../labels';
-import { TrashIcon, TrashTruckIcon } from '../../icons';
-import { NextTrashPickup } from '../../trashPickup/types';
+import { theme } from '../shared/theme';
+import { labels } from '../shared/labels';
+import { TrashIcon, TrashTruckIcon } from '../icons';
+import { NextTrashPickup } from './types';
 
 interface Props {
   nextPickup: NextTrashPickup | null;

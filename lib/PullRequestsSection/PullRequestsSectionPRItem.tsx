@@ -1,13 +1,13 @@
-import { PullRequest } from '../../pullRequests/types';
-import { getTimeAgo } from '../../pullRequests/services';
-import { theme } from '../../theme';
-import { UserIcon } from '../../icons';
+import { PullRequest } from './types';
+import { getTimeAgo } from './services';
+import { theme } from '../shared/theme';
+import { UserIcon } from '../icons';
 
 interface Props {
   pr: PullRequest;
 }
 
-export const PRItem = ({ pr }: Props) => (
+export const PullRequestsSectionPRItem = ({ pr }: Props) => (
   <div style={{ marginBottom: '4px', display: 'flex', flexDirection: 'column' }}>
     <div style={{ display: 'flex' }}>
       <UserIcon size={theme.iconSize.sm} />

@@ -1,4 +1,4 @@
-import { labels } from '../../lib/labels';
+import { labels } from './labels';
 
 describe('labels', () => {
   describe('pendingPRs', () => {

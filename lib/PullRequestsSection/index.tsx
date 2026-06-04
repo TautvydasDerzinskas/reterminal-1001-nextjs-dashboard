@@ -1,8 +1,8 @@
-import { PullRequest } from '../../pullRequests/types';
-import { theme } from '../../theme';
-import { labels } from '../../labels';
-import { SectionHeading } from './SectionHeading';
-import { PRItem } from './PRItem';
+import { PullRequest } from './types';
+import { theme } from '../shared/theme';
+import { labels } from '../shared/labels';
+import { SectionHeading } from './PullRequestsSectionHeading';
+import { PullRequestsSectionPRItem } from './PullRequestsSectionPRItem';
 
 const MAX_VISIBLE_PRS = 5;
 
@@ -28,7 +28,7 @@ export const PullRequestsSection = ({ prs }: Props) => (
     {prs.length > 0 ? (
       <div style={{ fontSize: theme.fontSizes.sm, display: 'flex', flexDirection: 'column' }}>
         {prs.slice(0, MAX_VISIBLE_PRS).map((pr) => (
-          <PRItem key={pr.number} pr={pr} />
+          <PullRequestsSectionPRItem key={pr.number} pr={pr} />
         ))}
         {prs.length > MAX_VISIBLE_PRS && (
           <div style={{ display: 'flex' }}>{labels.morePRs(prs.length - MAX_VISIBLE_PRS)}</div>

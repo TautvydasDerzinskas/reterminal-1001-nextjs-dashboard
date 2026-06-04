@@ -1,9 +1,9 @@
-import { DeviceData } from '../../device/types';
-import { theme } from '../../theme';
-import { labels } from '../../labels';
-import { BatteryIcon, ClockIcon, PhpIcon, ThermometerIcon, HumidityIcon } from '../../icons';
-import { IconRow } from './IconRow';
-import { IconLabel } from './IconLabel';
+import { DeviceData } from './types';
+import { theme } from '../shared/theme';
+import { labels } from '../shared/labels';
+import { BatteryIcon, ClockIcon, PhpIcon, ThermometerIcon, HumidityIcon } from '../icons';
+import { IconRow } from './DeviceSectionIconRow';
+import { IconLabel } from './DeviceSectionIconLabel';
 
 interface Props {
   deviceData: DeviceData | null;

@@ -1,4 +1,4 @@
-import { getWeatherDescription, getWeatherIcon } from '../../../lib/weather/utils';
+import { getWeatherDescription, getWeatherIcon } from './utils';
 
 describe('getWeatherDescription', () => {
   it('returns "Clear" for code 0', () => {

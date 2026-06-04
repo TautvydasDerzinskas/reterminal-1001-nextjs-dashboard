@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { PRItem } from '../../../lib/components/PullRequestsSection/PRItem';
-import { PullRequest } from '../../../lib/pullRequests/types';
+import { PullRequestsSectionPRItem } from './PullRequestsSectionPRItem';
+import { PullRequest } from './types';
 
 // Freeze time so getTimeAgo produces deterministic output
 const FIXED_NOW = new Date('2024-01-15T12:00:00Z');
@@ -25,22 +25,22 @@ const basePR: PullRequest = {
 
 describe('PRItem', () => {
   it('renders the PR number and title', () => {
-    render(<PRItem pr={basePR} />);
+    render(<PullRequestsSectionPRItem pr={basePR} />);
     expect(screen.getByText(/#42: Add dark mode support/)).toBeInTheDocument();
   });
 
   it('renders the author name', () => {
-    render(<PRItem pr={basePR} />);
+    render(<PullRequestsSectionPRItem pr={basePR} />);
     expect(screen.getByText(/jane/)).toBeInTheDocument();
   });
 
   it('renders relative time', () => {
-    render(<PRItem pr={basePR} />);
+    render(<PullRequestsSectionPRItem pr={basePR} />);
     expect(screen.getByText(/6 hours ago/)).toBeInTheDocument();
   });
 
   it('renders title with a colon-prefixed format (>  #number: title)', () => {
-    const { container } = render(<PRItem pr={basePR} />);
+    const { container } = render(<PullRequestsSectionPRItem pr={basePR} />);
     expect(container.textContent).toContain('#42: Add dark mode support');
   });
 });
