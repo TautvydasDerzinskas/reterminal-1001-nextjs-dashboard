@@ -60,7 +60,7 @@ export const TrashPickupSection = ({ nextPickup }: Props) => {
         color: textColor,
       }}
     >
-      {daysLeft === 1 ? (
+      {daysLeft === 0 ? (
         <div
           style={{
             display: 'flex',
