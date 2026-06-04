@@ -7,7 +7,7 @@ import { IconLabel } from './DeviceSectionIconLabel';
 
 interface Props {
   deviceData: DeviceData | null;
-  batteryDisplay: string;
+  batteryDisplay: string | undefined;
   firmwareDisplay: string | undefined;
   currentTime: string;
 }
@@ -30,10 +30,12 @@ export const DeviceSection = ({ deviceData, batteryDisplay, firmwareDisplay, cur
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         {/* Left group: battery · time · firmware */}
         <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <IconRow>
-            <BatteryIcon level={parseInt(batteryDisplay)} size={theme.iconSize.md} />
-            <IconLabel>{batteryDisplay}%</IconLabel>
-          </IconRow>
+          {batteryDisplay !== undefined && (
+            <IconRow>
+              <BatteryIcon level={parseInt(batteryDisplay)} size={theme.iconSize.md} />
+              <IconLabel>{batteryDisplay}%</IconLabel>
+            </IconRow>
+          )}
 
           <IconRow>
             <ClockIcon size={theme.iconSize.sm} />

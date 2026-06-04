@@ -7,6 +7,7 @@ import { PullRequest } from './PullRequestsSection/types';
 import { theme } from './shared/theme';
 import { labels } from './shared/labels';
 import { DeviceSection } from './DeviceSection/index';
+import { EmptyBatteryView } from './EmptyBatteryView';
 import { WeatherSectionWeatherCard } from './WeatherSection/WeatherSectionWeatherCard';
 import { PullRequestsSection } from './PullRequestsSection/index';
 import { TrashPickupSection } from './TrashPickupSection/index';
@@ -75,8 +76,14 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
   const { deviceData, weatherData, cities, prs } = data;
   const nextPickup = getNextTrashPickup(trashPickupDates as Parameters<typeof getNextTrashPickup>[0]);
   const overrides = getOverridesFromRequest(request);
-  const batteryDisplay = overrides?.battery ?? `${deviceData?.battery}`;
+  const hideBattery = overrides?.firmware !== undefined && overrides.firmware.toLowerCase().includes('xiao');
+  const batteryDisplay = hideBattery ? undefined : (overrides?.battery ?? `${deviceData?.battery}`);
   const firmwareDisplay = overrides?.firmware ?? deviceData?.firmware_version;
+
+  const batteryLevel = batteryDisplay !== undefined ? parseInt(batteryDisplay, 10) : NaN;
+  if (!hideBattery && !isNaN(batteryLevel) && batteryLevel < 6) {
+    return <EmptyBatteryView batteryDisplay={batteryDisplay!} />;
+  }
 
   return (
     <div
