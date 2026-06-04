@@ -11,6 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "jest",
+    "test:ci": "jest --ci",
     "prepare": "husky"
   },
   "dependencies": {
@@ -23,6 +25,10 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.3.2",
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.2.14",
@@ -30,6 +36,8 @@
     "eslint": "^9.39.3",
     "eslint-config-next": "^16.1.6",
     "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   }
