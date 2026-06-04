@@ -16,7 +16,7 @@ export const PullRequestsSectionPRItem = ({ pr }: Props) => (
       </span>
     </div>
     <div style={{ display: 'flex' }}>
-      &gt; #{pr.number}: {pr.title}
+      &gt; #{pr.number}: {pr.title.length > 40 ? pr.title.slice(0, 40) + '…' : pr.title}
     </div>
   </div>
 );

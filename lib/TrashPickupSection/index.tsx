@@ -103,8 +103,8 @@ export const TrashPickupSection = ({ nextPickup }: Props) => {
           </div>
         </div>
       )}
-      <div style={{ display: 'flex', fontSize: theme.fontSizes.md, fontWeight: theme.fontWeights.bold, marginTop: '8px' }}>
-        {typeLabel}
+      <div style={{ display: 'flex', fontSize: theme.fontSizes.md, fontWeight: theme.fontWeights.bold }}>
+        ({typeLabel})
       </div>
     </div>
   );

@@ -9,3 +9,4 @@ export { HumidityIcon } from './HumidityIcon';
 export { UserIcon } from './UserIcon';
 export { TrashIcon } from './TrashIcon';
 export { TrashTruckIcon } from './TrashTruckIcon';
+export { PullRequestIcon } from './PullRequestIcon';
