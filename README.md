@@ -1,5 +1,7 @@
 # reTerminal Next.js Dashboard
 
+![CI](https://github.com/TautvydasDerzinskas/reterminal-1001-nextjs-dashboard/actions/workflows/ci.yml/badge.svg)
+
 A dashboard application for displaying weather data and device information. Optimized for eInk screen.
 
 ![Dashboard Preview](.github/assets/preview.jpeg)
