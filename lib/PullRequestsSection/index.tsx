@@ -1,6 +1,7 @@
 import { PullRequest } from './types';
 import { theme } from '../shared/theme';
 import { labels } from '../shared/labels';
+import { styles } from '../shared/styles';
 import { PullRequestsSectionPRItem } from './PullRequestsSectionPRItem';
 import { PullRequestIcon } from '../icons';
 
@@ -17,8 +18,7 @@ export const PullRequestsSection = ({ prs }: Props) => (
       borderRadius: theme.radius.card,
       overflow: 'hidden',
       backgroundColor: theme.colors.cardBackground,
-      display: 'flex',
-      flexDirection: 'row',
+      ...styles.flexRow,
       flex: 1,
       minHeight: 0,
     }}
@@ -28,15 +28,13 @@ export const PullRequestsSection = ({ prs }: Props) => (
       style={{
         backgroundColor: theme.colors.cardBackgroundDark,
         color: theme.colors.textInverted,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        ...styles.flexColCenter,
         justifyContent: 'center',
         padding: theme.padding.card,
         gap: '8px',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ ...styles.flexAlignCenter, gap: '8px' }}>
         <PullRequestIcon size={32} color={theme.colors.textInverted} />
         <div style={{ display: 'flex', fontSize: '32px', fontWeight: theme.fontWeights.bold, lineHeight: 1 }}>
           {prs.length}
@@ -47,15 +45,14 @@ export const PullRequestsSection = ({ prs }: Props) => (
     {/* Right column: PR list */}
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        ...styles.flexCol,
         flex: 1,
         padding: theme.padding.card,
         overflow: 'hidden',
       }}
     >
       {prs.length > 0 ? (
-        <div style={{ fontSize: theme.fontSizes.sm, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ fontSize: theme.fontSizes.sm, ...styles.flexCol }}>
           {prs.slice(0, MAX_VISIBLE_PRS).map((pr) => (
             <PullRequestsSectionPRItem key={pr.number} pr={pr} />
           ))}

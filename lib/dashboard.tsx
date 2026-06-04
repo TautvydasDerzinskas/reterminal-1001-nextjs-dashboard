@@ -6,6 +6,7 @@ import { WeatherData } from './WeatherSection/types';
 import { PullRequest } from './PullRequestsSection/types';
 import { theme } from './shared/theme';
 import { labels } from './shared/labels';
+import { styles } from './shared/styles';
 import { DeviceSection } from './DeviceSection/index';
 import { EmptyBatteryView } from './EmptyBatteryView';
 import { WeatherSectionWeatherCard } from './WeatherSection/WeatherSectionWeatherCard';
@@ -92,8 +93,7 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
         height: theme.canvas.height,
         backgroundColor: theme.colors.background,
         padding: theme.padding.canvas,
-        display: 'flex',
-        flexDirection: 'column',
+        ...styles.flexCol,
         color: theme.colors.text,
       }}
     >
@@ -113,7 +113,7 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
         }}
       >
         {/* Left 2/3 column: first 2 weather cards + PR section */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 2, gap: theme.gap.cards }}>
+        <div style={{ ...styles.flexCol, flex: 2, gap: theme.gap.cards }}>
           <div style={{ display: 'flex', gap: theme.gap.cards }}>
             <WeatherSectionWeatherCard weather={weatherData[0]} location={cities[0]} />
             <WeatherSectionWeatherCard weather={weatherData[1]} location={cities[1]} />
@@ -122,7 +122,7 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
         </div>
 
         {/* Right 1/3 column: 3rd weather card + trash section */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: theme.gap.cards }}>
+        <div style={{ ...styles.flexCol, flex: 1, gap: theme.gap.cards }}>
           {/* Row wrapper keeps WeatherCard's flex:1 acting on width, not height */}
           <div style={{ display: 'flex' }}>
             <WeatherSectionWeatherCard weather={weatherData[2]} location={cities[2]} />
@@ -141,9 +141,7 @@ export function generateErrorJSX() {
         width: theme.canvas.width,
         height: theme.canvas.height,
         backgroundColor: theme.colors.background,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        ...styles.flexCenter,
         fontSize: theme.fontSizes.xl,
         color: theme.colors.text,
       }}

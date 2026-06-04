@@ -1,5 +1,6 @@
 import { theme } from '../shared/theme';
 import { labels } from '../shared/labels';
+import { styles } from '../shared/styles';
 import { TrashIcon, TrashTruckIcon } from '../icons';
 import { NextTrashPickup } from './types';
 
@@ -19,9 +20,7 @@ export const TrashPickupSection = ({ nextPickup }: Props) => {
           borderRadius: theme.radius.card,
           padding: theme.padding.card,
           backgroundColor: theme.colors.cardBackgroundDark,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          ...styles.flexColCenter,
           justifyContent: 'center',
           color: theme.colors.textInverted,
         }}
@@ -52,21 +51,13 @@ export const TrashPickupSection = ({ nextPickup }: Props) => {
         border: theme.border.card,
         borderRadius: theme.radius.card,
         backgroundColor: bgColor,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        ...styles.flexColCenter,
         justifyContent: 'center',
         color: textColor,
       }}
     >
       {daysLeft === 0 ? (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
+        <div style={{ ...styles.flexAlignCenter, gap: '10px' }}>
           <TrashTruckIcon size={TRASH_ICON_SIZE} color={textColor} />
           <div
             style={{
@@ -79,13 +70,7 @@ export const TrashPickupSection = ({ nextPickup }: Props) => {
           </div>
         </div>
       ) : (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            gap: '10px',
-          }}
-        >
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
           <TrashIcon size={TRASH_ICON_SIZE} color={textColor} />
           <div
             style={{

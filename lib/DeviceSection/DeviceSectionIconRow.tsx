@@ -1,4 +1,5 @@
 import { theme } from '../shared/theme';
+import { styles } from '../shared/styles';
 
 interface Props {
   children: React.ReactNode;
@@ -7,8 +8,7 @@ interface Props {
 export const IconRow = ({ children }: Props) => (
   <div
     style={{
-      display: 'flex',
-      alignItems: 'center',
+      ...styles.flexAlignCenter,
       fontWeight: theme.fontWeights.bold,
       fontSize: theme.fontSizes.md,
       marginRight: theme.gap.iconRow,

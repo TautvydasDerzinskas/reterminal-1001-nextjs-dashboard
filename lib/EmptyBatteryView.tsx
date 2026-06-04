@@ -1,4 +1,5 @@
 import { theme } from './shared/theme';
+import { styles } from './shared/styles';
 import { BatteryEmptyIcon } from './icons';
 
 interface Props {
@@ -11,9 +12,7 @@ export const EmptyBatteryView = ({ batteryDisplay }: Props) => (
       width: theme.canvas.width,
       height: theme.canvas.height,
       backgroundColor: theme.colors.cardBackgroundDark,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+      ...styles.flexColCenter,
       justifyContent: 'center',
       color: theme.colors.textInverted,
       gap: '12px',

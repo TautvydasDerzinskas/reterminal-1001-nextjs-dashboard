@@ -1,6 +1,7 @@
 import { DeviceData } from './types';
 import { theme } from '../shared/theme';
 import { labels } from '../shared/labels';
+import { styles } from '../shared/styles';
 import { BatteryIcon, ClockIcon, PhpIcon, ThermometerIcon, HumidityIcon } from '../icons';
 import { IconRow } from './DeviceSectionIconRow';
 import { IconLabel } from './DeviceSectionIconLabel';
@@ -27,7 +28,7 @@ export const DeviceSection = ({ deviceData, batteryDisplay, firmwareDisplay, cur
     }}
   >
     {deviceData ? (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div style={{ ...styles.flexRow, justifyContent: 'space-between' }}>
         {/* Left group: battery · time · firmware */}
         <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
           {batteryDisplay !== undefined && (
@@ -52,8 +53,7 @@ export const DeviceSection = ({ deviceData, batteryDisplay, firmwareDisplay, cur
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
+              ...styles.flexAlignCenter,
               fontWeight: theme.fontWeights.bold,
               fontSize: theme.fontSizes.md,
               marginLeft: theme.gap.iconRow,
@@ -65,8 +65,7 @@ export const DeviceSection = ({ deviceData, batteryDisplay, firmwareDisplay, cur
 
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
+              ...styles.flexAlignCenter,
               fontWeight: theme.fontWeights.bold,
               fontSize: theme.fontSizes.md,
               marginLeft: theme.gap.iconRow,

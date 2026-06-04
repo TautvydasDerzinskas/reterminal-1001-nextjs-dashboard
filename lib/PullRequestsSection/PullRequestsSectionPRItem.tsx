@@ -1,6 +1,7 @@
 import { PullRequest } from './types';
 import { getTimeAgo } from './services';
 import { theme } from '../shared/theme';
+import { styles } from '../shared/styles';
 import { UserIcon } from '../icons';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export const PullRequestsSectionPRItem = ({ pr }: Props) => (
-  <div style={{ marginBottom: '4px', display: 'flex', flexDirection: 'column' }}>
+  <div style={{ marginBottom: '4px', ...styles.flexCol }}>
     <div style={{ display: 'flex' }}>
       <UserIcon size={theme.iconSize.sm} />
       <span style={{ marginLeft: theme.padding.iconLabel }}>
