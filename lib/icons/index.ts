@@ -7,3 +7,5 @@ export { PhpIcon } from './PhpIcon';
 export { ThermometerIcon } from './ThermometerIcon';
 export { HumidityIcon } from './HumidityIcon';
 export { UserIcon } from './UserIcon';
+export { TrashIcon } from './TrashIcon';
+export { TrashTruckIcon } from './TrashTruckIcon';

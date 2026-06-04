@@ -19,6 +19,8 @@ export const PullRequestsSection = ({ prs }: Props) => (
       backgroundColor: theme.colors.cardBackground,
       display: 'flex',
       flexDirection: 'column',
+      flex: 1,
+      overflow: 'hidden',
     }}
   >
     <SectionHeading>{labels.pendingPRs(prs.length)}</SectionHeading>

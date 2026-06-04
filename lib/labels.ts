@@ -20,6 +20,19 @@ export const labels = {
   tempSeparator: '°C / ',
   humidity: '%',
 
+  // Trash pickup card
+  trashPickupTitle: 'Next Pickup',
+  trashPickupDays: (n: number) => n === 1 ? 'day' : 'days',
+  trashPickupToday: 'Today!',
+  trashPickupNone: 'No upcoming pickups',
+  trashTypes: {
+    plastic: 'Plastic',
+    bio: 'Bio',
+    paper: 'Paper',
+    mixed: 'Mixed',
+    glass: 'Glass',
+  },
+
   // Time / date format locale
   timeLocale: 'en-US',
   timeZone: 'Europe/Warsaw',
