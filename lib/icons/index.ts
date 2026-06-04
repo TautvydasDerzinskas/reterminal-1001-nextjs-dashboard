@@ -6,6 +6,7 @@ export { ClockIcon } from './ClockIcon';
 export { PhpIcon } from './PhpIcon';
 export { ThermometerIcon } from './ThermometerIcon';
 export { HumidityIcon } from './HumidityIcon';
+export { MoonIcon } from './MoonIcon';
 export { UserIcon } from './UserIcon';
 export { TrashIcon } from './TrashIcon';
 export { TrashTruckIcon } from './TrashTruckIcon';

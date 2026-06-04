@@ -11,8 +11,8 @@ export function getWeatherDescription(code: number): string {
     return 'Unknown';
 }
 
-export function getWeatherIcon(description: string) {
-    const iconProps = { size: 80 };
+export function getWeatherIcon(description: string, size = 80) {
+    const iconProps = { size };
 
     switch (description) {
         case 'Clear':    return <WiDaySunny {...iconProps} />;

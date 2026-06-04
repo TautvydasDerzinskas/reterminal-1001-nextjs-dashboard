@@ -51,7 +51,6 @@ export const TrashPickupSection = ({ nextPickup }: Props) => {
         flex: 1,
         border: theme.border.card,
         borderRadius: theme.radius.card,
-        padding: theme.padding.card,
         backgroundColor: bgColor,
         display: 'flex',
         flexDirection: 'column',

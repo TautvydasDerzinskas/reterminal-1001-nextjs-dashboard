@@ -2,6 +2,14 @@ import locations from '@/data/locations.json';
 import { LocationData, WeatherData, OpenMeteoResponse } from './types';
 import { getWeatherDescription } from './utils';
 
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function getDayLabel(dateStr: string, index: number): string {
+    if (index === 0) return 'Today';
+    const date = new Date(dateStr + 'T12:00:00');
+    return DAY_NAMES[date.getDay()] ?? dateStr;
+}
+
 export async function fetchWeatherData(location: string): Promise<WeatherData> {
     const locationData = (locations as Record<string, LocationData>)[location];
 
@@ -32,5 +40,11 @@ export async function fetchWeatherData(location: string): Promise<WeatherData> {
         description: getWeatherDescription(current.weather_code),
         tomorrowTempHigh: Math.round(daily.temperature_2m_max[1]),
         tomorrowTempLow: Math.round(daily.temperature_2m_min[1]),
+        forecast: daily.time.map((dateStr, i) => ({
+            dayLabel: getDayLabel(dateStr, i),
+            highTemp: Math.round(daily.temperature_2m_max[i]),
+            lowTemp: Math.round(daily.temperature_2m_min[i]),
+            description: getWeatherDescription(daily.weather_code[i]),
+        })),
     };
 }

@@ -8,6 +8,13 @@ export interface WeatherCardProps {
     location: string;
 }
 
+export interface DayForecast {
+    dayLabel: string;
+    highTemp: number;
+    lowTemp: number;
+    description: string;
+}
+
 export interface WeatherData {
     currentTemp: number;
     highTemp: number;
@@ -16,6 +23,7 @@ export interface WeatherData {
     description: string;
     tomorrowTempHigh: number;
     tomorrowTempLow: number;
+    forecast: DayForecast[];
 }
 
 export interface OpenMeteoCurrentUnits {

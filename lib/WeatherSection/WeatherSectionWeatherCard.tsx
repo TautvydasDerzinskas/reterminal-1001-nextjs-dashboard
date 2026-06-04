@@ -2,7 +2,7 @@ import { WeatherData } from './types';
 import { getWeatherIcon } from './utils';
 import { theme } from '../shared/theme';
 import { labels } from '../shared/labels';
-import { CityBadge } from './WeatherSectionCityBadge';
+import { ThermometerIcon, HumidityIcon } from '../icons';
 
 interface Props {
   weather: WeatherData | null;
@@ -15,37 +15,70 @@ export const WeatherSectionWeatherCard = ({ weather, location }: Props) => (
       flex: 1,
       border: theme.border.card,
       borderRadius: theme.radius.card,
-      padding: theme.padding.card,
+      overflow: 'hidden',
       backgroundColor: theme.colors.cardBackground,
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
       color: theme.colors.text,
     }}
   >
-    <h4 style={{ margin: '0 0 8px 0', fontSize: theme.fontSizes.md, fontWeight: theme.fontWeights.bold }}>
-      <CityBadge>{location}</CityBadge>
-    </h4>
+    <div
+      style={{
+        backgroundColor: theme.colors.cardBackgroundDark,
+        color: theme.colors.textInverted,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: `6px 0`,
+        fontSize: theme.fontSizes.lg,
+        fontWeight: theme.fontWeights.bold,
+      }}
+    >
+      {location}
+    </div>
 
-    {weather ? (
-      <div style={{ fontSize: theme.fontSizes.sm, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {getWeatherIcon(weather.description)}
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {weather ? (
+        <div style={{ fontSize: theme.fontSizes.sm, display: 'flex', flexDirection: 'column', width: '100%' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingLeft: theme.padding.card, paddingRight: theme.padding.card }}>
+            {getWeatherIcon(weather.description)}
+          </div>
+          <div style={{ display: 'flex', fontSize: theme.fontSizes.lg, alignItems: 'center', justifyContent: 'center', gap: '4px', paddingLeft: theme.padding.card, paddingRight: theme.padding.card, paddingBottom: theme.padding.card }}>
+            <span>{labels.now}</span> <ThermometerIcon size={20} /><span>{`${weather.currentTemp}°C`}</span> /
+            <HumidityIcon size={20} /><span>{`${weather.humidity}%`}</span>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+            {weather.forecast.slice(0, 3).map((day, i) => (
+              <div
+                key={i}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  padding: '4px 2px',
+                  backgroundColor: i === 0 ? theme.colors.cardBackgroundDark : theme.colors.cardBackground,
+                  color: i === 0 ? theme.colors.textInverted : theme.colors.text,
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  {getWeatherIcon(day.description, 28)}
+                </div>
+                <div style={{ display: 'flex', fontSize: theme.fontSizes.sm, fontWeight: theme.fontWeights.bold }}>
+                  {day.dayLabel}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: theme.fontSizes.sm }}>
+                  <ThermometerIcon size={14} /><span>{`${day.highTemp}°C`}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div style={{ display: 'flex', fontSize: theme.fontSizes.lg, marginBottom: '10px' }}>
-          {weather.description}: {weather.currentTemp}°C / {weather.humidity}%
+      ) : (
+        <div style={{ fontSize: theme.fontSizes.sm, color: theme.colors.text, display: 'flex', padding: theme.padding.card }}>
+          {labels.weatherLoadFailed}
         </div>
-        <div style={{ display: 'flex' }}>
-          <strong>{labels.today}</strong>: {weather.highTemp}°C / {weather.lowTemp}°C
-        </div>
-        <div style={{ display: 'flex' }}>
-          <strong>{labels.tomorrow}</strong>: {weather.tomorrowTempHigh}°C / {weather.tomorrowTempLow}°C
-        </div>
-      </div>
-    ) : (
-      <div style={{ fontSize: theme.fontSizes.sm, color: theme.colors.text, display: 'flex' }}>
-        {labels.weatherLoadFailed}
-      </div>
-    )}
+      )}
+    </div>
   </div>
 );

@@ -17,6 +17,7 @@ export const labels = {
   // Weather card
   today: 'Today',
   tomorrow: 'Tomorrow',
+  now: 'Now',
   tempSeparator: '°C / ',
   humidity: '%',
 
