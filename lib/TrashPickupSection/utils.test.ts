@@ -105,5 +105,41 @@ describe('getNextTrashPickup', () => {
       expect(result!.daysLeft).toBe(5);
       expect(result!.types).toEqual(['paper']);
     });
+
+    it('shows todays pickup before midday when today and tomorrow both have pickups', () => {
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date('2026-06-10T06:00:00Z'));
+      const entries: TrashPickupEntry[] = [
+        { date: '2026-06-10', types: ['bio'] },
+        { date: '2026-06-11', types: ['plastic'] },
+      ];
+      const result = getNextTrashPickup(entries);
+      expect(result!.daysLeft).toBe(0);
+      expect(result!.types).toEqual(['bio']);
+    });
+
+    it('shows tomorrows pickup after midday when today and tomorrow both have pickups', () => {
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date('2026-06-10T12:00:00Z'));
+      const entries: TrashPickupEntry[] = [
+        { date: '2026-06-10', types: ['bio'] },
+        { date: '2026-06-11', types: ['plastic'] },
+      ];
+      const result = getNextTrashPickup(entries);
+      expect(result!.daysLeft).toBe(1);
+      expect(result!.types).toEqual(['plastic']);
+    });
+
+    it('keeps showing todays pickup after midday when tomorrow has no pickup', () => {
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date('2026-06-10T14:00:00Z'));
+      const entries: TrashPickupEntry[] = [
+        { date: '2026-06-10', types: ['bio'] },
+        { date: '2026-06-15', types: ['plastic'] },
+      ];
+      const result = getNextTrashPickup(entries);
+      expect(result!.daysLeft).toBe(0);
+      expect(result!.types).toEqual(['bio']);
+    });
   });
 });
