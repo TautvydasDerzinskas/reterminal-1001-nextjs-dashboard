@@ -34,6 +34,15 @@ export const labels = {
     glass: 'Glass',
   },
 
+  // Calendar events card
+  calendarNoEvents: 'No upcoming events',
+  calendarNow: 'NOW',
+  calendarEventSoon: '< 1h',
+  calendarEventHours: (h: number) => `${h}h`,
+  calendarEventDays: (d: number) => `${d}d`,
+  moreCalendarEvents: (n: number) => `... and ${n} more`,
+  dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const,
+
   // Time / date format locale
   timeLocale: 'en-US',
   timeZone: 'Europe/Warsaw',

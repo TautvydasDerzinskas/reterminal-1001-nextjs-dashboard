@@ -11,6 +11,7 @@ import { DeviceSection } from './DeviceSection/index';
 import { EmptyBatteryView } from './EmptyBatteryView';
 import { WeatherSectionWeatherCard } from './WeatherSection/WeatherSectionWeatherCard';
 import { PullRequestsSection } from './PullRequestsSection/index';
+import { CalendarSection } from './CalendarSection/index';
 import { TrashPickupSection } from './TrashPickupSection/index';
 import { getNextTrashPickup } from './TrashPickupSection/utils';
 import trashPickupDates from '../data/trash-pickup-dates.json';
@@ -20,6 +21,7 @@ export interface DashboardData {
   weatherData: WeatherData[];
   cities: string[];
   prs: PullRequest[];
+  currentTime: string;
 }
 
 export interface DashboardOverrides {
@@ -28,15 +30,6 @@ export interface DashboardOverrides {
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function getCurrentTime(): string {
-  return new Date().toLocaleTimeString(labels.timeLocale, {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-    timeZone: labels.timeZone,
-  });
-}
 
 function getOverridesFromRequest(request?: Request): DashboardOverrides {
   if (!request) return {};
@@ -67,14 +60,20 @@ export async function fetchDashboardData(): Promise<DashboardData> {
 
   const prs = weatherDataAndPrs.pop() as PullRequest[];
   const weatherData = weatherDataAndPrs as WeatherData[];
+  const currentTime = new Date().toLocaleTimeString(labels.timeLocale, {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: labels.timeZone,
+  });
 
-  return { deviceData, weatherData, cities, prs };
+  return { deviceData, weatherData, cities, prs, currentTime };
 }
 
 // ─── JSX generators ───────────────────────────────────────────────────────────
 
 export function generateDashboardJSX(data: DashboardData, request?: Request) {
-  const { deviceData, weatherData, cities, prs } = data;
+  const { deviceData, weatherData, cities, prs, currentTime } = data;
   const nextPickup = getNextTrashPickup(trashPickupDates as Parameters<typeof getNextTrashPickup>[0]);
   const overrides = getOverridesFromRequest(request);
   const hideBattery = overrides?.firmware !== undefined && overrides.firmware.toLowerCase().includes('xiao');
@@ -101,7 +100,7 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
         deviceData={deviceData}
         batteryDisplay={batteryDisplay}
         firmwareDisplay={firmwareDisplay}
-        currentTime={getCurrentTime()}
+        currentTime={currentTime}
       />
 
       <div
@@ -118,7 +117,7 @@ export function generateDashboardJSX(data: DashboardData, request?: Request) {
             <WeatherSectionWeatherCard weather={weatherData[0]} location={cities[0]} />
             <WeatherSectionWeatherCard weather={weatherData[1]} location={cities[1]} />
           </div>
-          <PullRequestsSection prs={prs} />
+          {prs.length > 0 ? <PullRequestsSection prs={prs} /> : <CalendarSection />}
         </div>
 
         {/* Right 1/3 column: 3rd weather card + trash section */}
