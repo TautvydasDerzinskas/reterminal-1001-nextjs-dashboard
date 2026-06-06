@@ -53,8 +53,11 @@ export const WeatherSectionWeatherCard = ({ weather, location }: Props) => (
                   flex: 1,
                   ...styles.flexColCenter,
                   padding: '4px 2px',
-                  backgroundColor: i === 0 ? theme.colors.cardBackgroundDark : theme.colors.cardBackground,
-                  color: i === 0 ? theme.colors.textInverted : theme.colors.text,
+                  backgroundColor: theme.colors.cardBackground,
+                  color: theme.colors.text,
+                  border: i === 0 ? '1px dashed #000000' : 'none',
+                  borderBottom: 'none',
+                  borderLeft: 'none',
                 }}
               >
                 <div style={{ ...styles.flexCenter }}>
