@@ -69,6 +69,19 @@ export const TrashPickupSection = ({ nextPickup }: Props) => {
             {labels.trashPickupToday}
           </div>
         </div>
+      ) : daysLeft === 1 ? (
+        <div style={{ ...styles.flexAlignCenter, gap: '10px' }}>
+          <TrashIcon size={TRASH_ICON_SIZE} color={textColor} />
+          <div
+            style={{
+              display: 'flex',
+              fontSize: theme.fontSizes.xl,
+              fontWeight: theme.fontWeights.bold,
+            }}
+          >
+            {labels.trashPickupTomorrow}
+          </div>
+        </div>
       ) : (
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
           <TrashIcon size={TRASH_ICON_SIZE} color={textColor} />

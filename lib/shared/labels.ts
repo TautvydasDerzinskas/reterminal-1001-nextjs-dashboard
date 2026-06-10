@@ -25,6 +25,7 @@ export const labels = {
   trashPickupTitle: 'Next Pickup',
   trashPickupDays: (n: number) => n === 1 ? 'day' : 'days',
   trashPickupToday: 'Today!',
+  trashPickupTomorrow: 'Tomorrow!',
   trashPickupNone: 'No upcoming pickups',
   trashTypes: {
     plastic: 'Plastic',
